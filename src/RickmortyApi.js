@@ -48,10 +48,19 @@ export class RickmortyApi extends LitElement {
       });
     });
     console.log(this.characters);
-    this.dispatchEvent(new CustomEvent('comunicar',{detail: this.characters}));
   }
 
   render() {
-    return html``;
+    return html`
+        ${this.characters.map(character => html`
+          <paper-card>
+            <img src="${character.image}">
+            <h2>${character.name}</h2>
+            <div class="card-content">
+              <p>Id: ${character.id}</p>
+              <p>Gender: ${character.gender}</p>
+            </div>
+          </paper-card>
+        `)}
+    `;
   }
-}

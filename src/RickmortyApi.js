@@ -58,9 +58,9 @@ export class RickmortyApi extends LitElement {
             <h2>${character.name}</h2>
             <div class="card-content">
               <p>Id: ${character.id}</p>
-              <p>Gender: ${character.gender}</p>
             </div>
           </paper-card>
         `)}
     `;
   }
+}

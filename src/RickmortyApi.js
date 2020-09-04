@@ -12,55 +12,38 @@ export class RickmortyApi extends LitElement {
     `;
   }
 
- static get properties() {
+static get properties() {
     return {
-      title: { type: String },
-      counter: { type: Number },
+      url: { type: String },
       data: { type: Array },
-      characters: { type: Array },
+      limit: { type: String }
     };
   }
 
   constructor() {
     super();
-    this.title = 'Hey there';
+    this.url = "https://rickandmortyapi.com/api/character/";
     this.data = [];
-    this.characters = [];
-
   }
 
-
-  firstUpdated(){
-    fetch('https://rickandmortyapi.com/api/character/')
-    .then(r => r.json())
-    .then(r => {
-      this.data = r.results;
-      this.receiveCharacter();
-    });
-  }
-
-  receiveCharacter() {
-    this.data.forEach((character, index) => {
-      this.characters.push({
-        name: character.name,
-        id: character.id,
-        image: character.image,
+  async firstUpdated() {
+    await fetch(`${this.url}`)
+      .then(r => r.json())
+      .then(data => {
+        this.mapInfo(data.results);
       });
-    });
-    console.log(this.characters);
+    this.dispatchEvent(new CustomEvent('info-loaded', { detail: this.data }));
   }
 
-  render() {
-    return html`
-        ${this.characters.map(character => html`
-          <paper-card>
-            <img src="${character.image}">
-            <h2>${character.name}</h2>
-            <div class="card-content">
-              <p>Id: ${character.id}</p>
-            </div>
-          </paper-card>
-        `)}
-    `;
+  mapInfo(data) {
+    data.forEach((item, index) => {
+      let itm = {
+        name: item.name,
+        id: item.id,
+        image: item.image
+      }
+      this.data = [...this.data, itm]
+    });
   }
+
 }

@@ -25,12 +25,12 @@ static get properties() {
     await fetch('https://rickandmortyapi.com/api/character/')
       .then(r => r.json())
       .then(characters => {
-        this.mapInfo(characters.results);
+        this.createCharacters(characters.results);
       });
     this.dispatchEvent(new CustomEvent('cargar', { detail: this.characters }));
   }
 
-  mapInfo(characters) {
+  createCharacters(characters) {
     characters.forEach((character, index) => {
       let rymarray = {
         name: character.name,

@@ -1,4 +1,5 @@
 import { html, css, LitElement } from 'lit-element';
+import '@polymer/paper-button/paper-button.js';
 
 export class RickmortyApi extends LitElement {
   static get styles() {
